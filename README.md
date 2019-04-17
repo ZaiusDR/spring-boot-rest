@@ -35,3 +35,68 @@ public Student getStudent(@PathVariable int studentId) {
     return students.get(studentId);
 }
 ```
+
+## Exception Handling
+
+It seems new versions of Spring can convert automatically the exceptions to JSON. But for customize it:
+
+* Create a Error Response POJO:
+
+```
+public class StudentErrorResponse {
+
+    private int status;
+    private String message;
+    private long timeStamp;
+
+    public StudentErrorResponse() {
+    }
+
+    // Getters / Setters
+}
+```
+
+It will be converted to JSON as usual with Jackson
+
+* Create a custom Exception:
+
+```
+public class StudentNotFoundException extends RuntimeException {
+
+    public StudentNotFoundException(String message) {
+        super(message);
+    }
+}
+```
+
+* Throw exception in the controller:
+
+```
+@GetMapping("/students/{studentId}")
+public Student getStudent(@PathVariable int studentId) {
+
+    if (studentId >= students.size() || studentId < 0) {
+        throw new StudentNotFoundException("Student id not found - " + studentId);
+    }
+    return students.get(studentId);
+}
+```
+
+* Add an Exception Handler in the Controller:
+
+```
+@ExceptionHandler
+public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc) {
+    StudentErrorResponse error = new StudentErrorResponse();
+
+    error.setStatus(HttpStatus.NOT_FOUND.value());
+    error.setMessage(exc.getMessage());
+    error.setTimeStamp(System.currentTimeMillis());
+
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+}
+```
+
+The `ResponseEntity` object, provides a fine control for the Controller response, such as
+the Status Code, Body, etc...
+
