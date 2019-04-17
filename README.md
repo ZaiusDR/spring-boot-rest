@@ -119,3 +119,62 @@ public class StudentRestExceptionHandler {
 ```
 
 **This is a Best Practice**
+
+
+## Basics on API Design
+
+### Understanding Usage
+
+- Who is going to use the API
+- How they will use it.
+- Design based on requirements.
+
+### API Design Process
+
+- Review API Requirements (I.e: CRUD ops for an entity).
+- Identify main resource/entity - The convention is to use plural nouns for endpoints (/customers).
+- Use HTTP methods to assign action on resource:
+
+<table>
+    <tr>
+        <th>HTTP Method</th>
+        <th>Endpoint</th>
+        <th>CRUD ACtion</th>
+    </tr>
+    <tr>
+        <td>POST</th>
+        <td>/api/customers</th>
+        <td>Create new customer</th>
+    </tr>
+    <tr>
+        <td>GET</th>
+        <td>/api/customers</th>
+        <td>Read a list of customers</th>
+    </tr>
+    <tr>
+        <td>GET</th>
+        <td>/api/customers/{customerId}</th>
+        <td>Read a single customer</th>
+    </tr>
+    <tr>
+        <td>PUT</th>
+        <td>/api/customers</th>
+        <td>Update an existing customer</th>
+    </tr>
+    <tr>
+        <td>DELETE</th>
+        <td>/api/customers/{customerId}</th>
+        <td>Delete an existing customer</th>
+    </tr>
+</table>
+
+
+### REST Anti-patterns
+
+Don't use endpoints for CRUD Ops (Like: /deleteCustomer, /addCustomer). Use HTTP Methods.
+
+
+
+### REST Implementation
+
+Continues on https://github.com/ZaiusDR/spring-web-customer-tracker
