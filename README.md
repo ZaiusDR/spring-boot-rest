@@ -12,7 +12,7 @@ Just annotate it with `@RestController`
 public class StudentRestController {
 
     @GetMapping("/students")
-    public List<Student> sayHello() {
+    public List<Student> getStudents() {
 
         List<Student> students = new ArrayList<>();
 
@@ -22,5 +22,16 @@ public class StudentRestController {
 
         return students;
     }
+}
+```
+
+## Path Variables
+
+Such as `/api/students/0`
+
+```
+@GetMapping("/students/{studentId}")
+public Student getStudent(@PathVariable int studentId) {
+    return students.get(studentId);
 }
 ```
