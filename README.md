@@ -100,3 +100,22 @@ public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundExcep
 The `ResponseEntity` object, provides a fine control for the Controller response, such as
 the Status Code, Body, etc...
 
+
+## Advice Controllers (AOP)
+
+They are useful for functionality common to many controllers. Like the Exception Handling.
+Just use the `@ControllerAdvice` annotation, and it will intercept all the requests and responses.
+
+```
+@ControllerAdvice
+public class StudentRestExceptionHandler {
+
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc) {
+        StudentErrorResponse error = new StudentErrorResponse();
+    ...
+    ...
+
+```
+
+**This is a Best Practice**
